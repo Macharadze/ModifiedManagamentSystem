@@ -10,7 +10,6 @@ namespace Modified.Models
 
         public string LastName { get; set; }
 
-        [StringLength(11)]
         public string number { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }

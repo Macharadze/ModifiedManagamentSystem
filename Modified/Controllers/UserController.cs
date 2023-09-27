@@ -18,26 +18,44 @@ namespace Modified.Controllers
             this.user = user;
         }
 
-        [HttpGet("GetAllUser")]
+        [HttpGet("Users")]
         public async Task<ActionResult<ServiceResponse<UserDto>>> GetAllUser()
         {
-            var response =await user.GetUsers();
-            
-        if(response == null)
-                return BadRequest(response);
+            var response = await user.GetUsers();
 
-        return Ok(response);
-        }
-        
-        [HttpGet("GetUserById")]
-        public async Task<ActionResult<ServiceResponse<User>>> GetUser(int id)
-        {
-            var response = await user.GetUser(id);
-            if(response == null)
+            if (response == null)
                 return BadRequest(response);
 
             return Ok(response);
         }
-       
+
+        [HttpGet("Users/{id}")]
+        public async Task<ActionResult<ServiceResponse<User>>> GetUser(int id)
+        {
+            var response = await user.GetUser(id);
+            if (response == null)
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<UserDto>>> Updatete(int id, UserDto userDto)
+        {
+            var response = await user.UpdateUser(id, userDto);
+            if (response == null)
+                return BadRequest(response);
+            return Ok(response);
+        }
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<List<UserDto>>>> DeleteUser(int id)
+        {
+            var response =await user.DeleteUser(id);
+            if(response == null)
+                return BadRequest(response);
+            return Ok(response);
+        }
+
+
+
     }
 }

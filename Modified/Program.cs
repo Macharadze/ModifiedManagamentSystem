@@ -46,6 +46,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddScoped<IAuth, AuthRepository>();
 builder.Services.AddScoped<IUser, UserRepository>();
+builder.Services.AddScoped<IUserTable,UserProfileRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

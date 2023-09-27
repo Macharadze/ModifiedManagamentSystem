@@ -39,10 +39,13 @@ namespace Modified.Repository
             }
             else
             {
+                user.isActive = true;
+                context.Users.Update(user);
+                context.SaveChanges();
                 response.Data = CreateToken(user);
 
             }
-            return response;
+            return await Task.FromResult(response);
         }
 
         public async Task<ServiceResponse<int>> Register(User user, string password, string email)
@@ -70,13 +73,13 @@ namespace Modified.Repository
         {
             if (context.Users.Count() == 0)
             {
-                return false;
+                return await Task.FromResult(false);
             }
             if ( context.Users.Any(u => u.Username.ToLower() == username.ToLower()))
             {
-                return true;
+                return await Task.FromResult( true);
             }
-            return false;
+            return await Task.FromResult(false);
         }
         private void CreatePasswordHassh(string password,out byte[] passHash,out byte[] passSalt) {
         using(var hmac = new System.Security.Cryptography.HMACSHA512())

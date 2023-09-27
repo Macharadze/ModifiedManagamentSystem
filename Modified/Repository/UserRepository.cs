@@ -3,7 +3,6 @@ using Modified.Data;
 using Modified.Dto;
 using Modified.Interfaces;
 using Modified.Models;
-using System.Data.Entity;
 
 namespace Modified.Repository
 {
@@ -63,18 +62,22 @@ namespace Modified.Repository
         }
 
 
-        public async Task<ServiceResponse<UserDto>> UpdateUser(int id)
+        public async Task<ServiceResponse<UserDto>> UpdateUser(int id,UserDto userDto)
         {
             var response = new ServiceResponse<UserDto>();
-            var target =await myDB.Users.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var target =myDB.Users.Where(i => i.Id == id).FirstOrDefault();
             if (target == null)
             {
                 response.Succes = false;
                 response.Message = "the user does not exists";
-                return response;
+                return await Task.FromResult(response);
             }
-
-            throw new NotImplementedException();
+            target.Username = userDto.Username;
+            target.Email = userDto.Email;
+            response .Data = MapToDto(target);
+            myDB.Users.Update(target);
+            await myDB.SaveChangesAsync(); 
+            return response;
         }
 
      
