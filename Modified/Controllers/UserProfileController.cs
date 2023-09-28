@@ -7,6 +7,7 @@ using Modified.Models;
 
 namespace Modified.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
