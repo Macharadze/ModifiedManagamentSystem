@@ -7,7 +7,6 @@ using Modified.Models;
 
 namespace Modified.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -27,7 +26,24 @@ namespace Modified.Controllers
             }
             return Ok(response);
         }
-      
 
+        [HttpPut("UserProfile/{userProfileId}")]
+        public async Task<ActionResult<ServiceResponse<ProfileDtoWithId>>> UpdateUserProfile(int userProfileId, UserProfileDto profile)
+        {
+            var response =user.UpdateUserProfile(userProfileId, profile);
+
+            return Ok(response);
+        }
+
+        [HttpDelete("UserProfile/{userProfileId}")]
+       public async Task<ActionResult<ServiceResponse<List<ProfileDtoWithId>>>> DeleteUserProfile(int userProfileId, int userId)
+        {
+            return Ok(user.DeleteUserProfile(userProfileId, userId));
+        }
+        [HttpGet("User/UserProfile/{userId}")]
+     public async   Task<ActionResult<ServiceResponse<List<ProfileDtoWithId>>>> GetUserProfilesbyOwnerId(int userId)
+        {
+            return Ok(user.GetUserProfilesbyOwnerId(userId));
+        }
     }
 }
